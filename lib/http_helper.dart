@@ -15,7 +15,9 @@ class HttpHelper {
       String jsonString = response.body;
 
       //convert the List<Map>
-      items = jsonDecode(jsonString);
+      List data = jsonDecode(jsonString);
+      items = data.cast<Map>();
+
     }
 
     return items;
