@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http_requests/http_helper.dart';
+import 'package:http_requests/screens/edit_post.dart';
 
 class PostDetails extends StatelessWidget {
   PostDetails(this.itemId, {super.key}) {
@@ -15,6 +16,21 @@ class PostDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Details'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => EditPost(post)));
+            },
+            icon: const Icon(Icons.edit),
+          ),
+          IconButton(
+            onPressed: () {
+              //Delete
+            },
+            icon: const Icon(Icons.delete),
+          ),
+        ],
       ),
       body: FutureBuilder<Map>(
         future: _futurePost,
@@ -33,7 +49,7 @@ class PostDetails extends StatelessWidget {
               children: [
                 Text(
                   '${post['title']}',
-                  style:const TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
