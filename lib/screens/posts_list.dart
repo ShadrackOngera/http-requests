@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http_requests/http_helper.dart';
+import 'package:http_requests/screens/add_post.dart';
 import 'package:http_requests/screens/post_details.dart';
 
 class PostsList extends StatelessWidget {
@@ -13,6 +14,11 @@ class PostsList extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Posts List'),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => AddPost()));
+            
+      }),
       body: FutureBuilder<List<Map>>(
         future: _futurePosts,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -36,7 +42,9 @@ class PostsList extends StatelessWidget {
                   subtitle: Text('${thisItem['body']}'),
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => PostDetails(thisItem['id'].toString())),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              PostDetails(thisItem['id'].toString())),
                     );
                   },
                 );

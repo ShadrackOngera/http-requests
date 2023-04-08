@@ -52,7 +52,7 @@ class HttpHelper {
         body: jsonEncode(data),
         headers: {'content-type': 'application/json'});
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       status = response.body.isNotEmpty;
     }
 
