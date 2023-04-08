@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http_requests/http_helper.dart';
 
 class EditPost extends StatefulWidget {
-  EditPost(this.post, {required Key key}) : super(key: key);
-  Map post;
+  EditPost(this.post, {Key? key}) : super(key: key);
 
+  Map post;
   @override
   State<EditPost> createState() => _EditPostState();
 }
@@ -13,7 +13,6 @@ class _EditPostState extends State<EditPost> {
   TextEditingController _controllerTitle = TextEditingController();
   TextEditingController _controllerBody = TextEditingController();
 
-  @override
   initState() {
     super.initState();
     _controllerTitle.text = widget.post['title'];
@@ -38,9 +37,22 @@ class _EditPostState extends State<EditPost> {
                 controller: _controllerBody,
               ),
               ElevatedButton(
-                onPressed: () {
-                  Map<String, String> data
-                  HttpHelper().updateItem(data, widget.post['id'])
+                onPressed: () async {
+                  Map<String, String> dataToUpdate = {
+                    'titel': _controllerTitle.text,
+                    'body': _controllerBody.text,
+                  };
+
+                  bool status = await HttpHelper()
+                      .updateItem(dataToUpdate, widget.post['id'].toString());
+
+                  if (status) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Post Updated')));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Failed to Update')));
+                  }
                 },
                 child: const Text('Submit'),
               ),
